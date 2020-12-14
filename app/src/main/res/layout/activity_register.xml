@@ -4,29 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegisterActivity">
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-
-    >
-
-        <ImageButton
-            android:id="@+id/imageButton3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:srcCompat="@drawable/abc_vector_test" />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Exit"
-            android:layout_gravity="center"/>
-
-
-    </LinearLayout>
+    tools:context=".view.RegisterActivity">
 
     <ScrollView
     android:layout_width="match_parent"
@@ -41,8 +19,6 @@
             android:gravity="center"
             android:orientation="vertical">
 
-
-
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -52,9 +28,8 @@
 
                 <ImageView
                     android:id="@+id/imageView2"
-                    android:layout_width="175dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_height="175dp"
+                    android:layout_width="140dp"
+                    android:layout_height="140dp"
                     app:srcCompat="@drawable/brightlogo" />
 
             </LinearLayout>
@@ -66,21 +41,6 @@
                 >
 
                 <com.google.android.material.textfield.TextInputLayout
-                    android:id="@+id/input_layout_username"
-                    android:layout_width="match_parent"
-                    android:background="@color/white"
-                    android:layout_height="wrap_content">
-
-                    <EditText
-                        android:id="@+id/input_username"
-                        android:background="?android:colorBackground"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="Username" />
-
-                </com.google.android.material.textfield.TextInputLayout>
-
-                <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_Fullname"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
@@ -89,7 +49,7 @@
                         android:layout_width="match_parent"
                         android:background="?android:colorBackground"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
+
                         android:hint="Full name" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -103,24 +63,48 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
                         android:hint="E-mail" />
+
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_Password"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
+
                     <EditText
                         android:id="@+id/input_Password"
                         android:layout_width="match_parent"
-                        android:background="?android:colorBackground"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="20dp"
-                        android:layout_marginBottom="20dp"
-                        android:hint="Password" />
+                        android:layout_weight="1"
+                        android:background="#FFFFFF"
+                        android:ems="10"
+                        android:hint="Password"
+                        android:inputType="textPassword"
+                        android:layout_marginTop="20dp" />
                 </com.google.android.material.textfield.TextInputLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="14dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:textSize="16sp"
+                        android:text="Role"/>
+                    <Spinner
+                        android:layout_alignParentRight="true"
+                        android:id="@+id/spinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:entries="@array/roles" />
+                </RelativeLayout>
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginTop="30dp"
                     app:layout_constraintVertical_bias="0.9"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -133,17 +117,14 @@
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="?attr/colorSecondary"
-                        android:text="Register"
-                        />
+                        android:text="Register" />
+
                 </LinearLayout>
 
             </LinearLayout>
 
         </LinearLayout>
 
-
-
     </ScrollView>
-        android:layout_width=""
-        android:layout_height=""
+
 </androidx.constraintlayout.widget.ConstraintLayout>

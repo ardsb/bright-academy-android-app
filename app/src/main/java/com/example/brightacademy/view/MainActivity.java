@@ -17,7 +17,8 @@ import android.view.MenuItem;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class
+MainActivity extends AppCompatActivity {
     TextView input, input2,register;
     Button login;
 

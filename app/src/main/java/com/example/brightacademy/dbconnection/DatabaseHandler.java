@@ -19,7 +19,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
 
     private static final String TABLE_USER = "user";
     private static final String KEY_ID = "id";
-    private static final String KEY_USR_NAME = "username";
     private static final String KEY_FULL_NAME = "fullname";
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
@@ -37,7 +36,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         String CREATE_StudentsS_TABLE = "CREATE TABLE " + TABLE_USER + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + KEY_USR_NAME  + " TEXT,"
                 + KEY_FULL_NAME + " TEXT,"
                 + KEY_EMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
@@ -61,7 +59,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_USR_NAME, details.getUsername());
         values.put(KEY_FULL_NAME, details.getFullName());
         values.put(KEY_EMAIL, details.getEmail());
         values.put(KEY_PASSWORD, details.getPassword());
@@ -92,7 +89,6 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             do {
                 User User = new User();
                 User.setId(Integer.parseInt(cursor.getString(0)));
-                User.setUsername(cursor.getString(1));
                 User.setFullName(cursor.getString(2));
                 User.setEmail(cursor.getString(3));
                 User.setPassword(cursor.getString(4));

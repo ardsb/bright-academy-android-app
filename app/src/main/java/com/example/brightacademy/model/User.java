@@ -7,7 +7,6 @@ public class User {
     }
 
     private int id;
-    private String username;
     private String fullName;
     private String email;
     private String password;
@@ -15,23 +14,18 @@ public class User {
 
 
 
-    public User(String username, String fullName, String email,
-                String password, UserRole userRole) {
-        this.username = username;
+    public User( String fullName, String email,
+                String password, String userRole) {
         this.fullName = fullName;
         this.email = email;
         this.password = password;
-        this.userRole = userRole;
+        UserRole defaultUserRole = UserRole.STUDENT;
+        if (userRole.equals("Admin")){
+            defaultUserRole = UserRole.ADMIN;
+        }
+        this.userRole = defaultUserRole;
     }
 
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     public String getFullName() {
         return fullName;

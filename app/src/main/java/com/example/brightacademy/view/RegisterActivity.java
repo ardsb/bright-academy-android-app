@@ -6,6 +6,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,8 +18,10 @@ import com.example.brightacademy.model.UserRole;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    EditText username,fullname,email,password;
+    EditText fullname,email,password;
     Button register;
+
+    Spinner spinner;
 
     DatabaseHandler db;
 //    Button exit;
@@ -31,8 +34,8 @@ public class RegisterActivity extends AppCompatActivity {
 
         db=new DatabaseHandler(this);
 
+        spinner=findViewById(R.id.spinner);
 
-        username=findViewById(R.id.input_username);
         fullname=findViewById(R.id.input_Fullname);
         email=findViewById(R.id.input_Email);
         password=findViewById(R.id.input_Password);
@@ -44,27 +47,29 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String usrnm = username.getText().toString().trim();
                 String fllnm = fullname.getText().toString().trim();
                 String emil = email.getText().toString().trim();
                 String pswrd = password.getText().toString().trim();
 
+                if(!TextUtils.isEmpty(fllnm) && !TextUtils.isEmpty(emil) && !TextUtils.isEmpty(pswrd)){
 
+                    String roleFromSpinner=spinner.getSelectedItem().toString();
+                    db.addUser(new User(fllnm,emil,pswrd,roleFromSpinner));
 
-                if(!TextUtils.isEmpty(usrnm) && !TextUtils.isEmpty(fllnm) && !TextUtils.isEmpty(emil) && !TextUtils.isEmpty(pswrd)){
-
-                    db.addUser(new User(usrnm,fllnm,emil,pswrd, UserRole.STUDENT));
-
-                    username.setText("");
                     fullname.setText("");
                     email.setText("");
                     password.setText("");
+                    spinner.setSelection(0);
                     Toast.makeText(RegisterActivity.this, "You have successfully registered",Toast.LENGTH_SHORT ).show();
 
                 }else {
 
                    Toast.makeText(RegisterActivity.this, "Enter valid input",Toast.LENGTH_SHORT ).show();
                 }
+
+
+
+
 
 
             }
