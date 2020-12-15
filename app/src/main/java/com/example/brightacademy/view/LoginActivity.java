@@ -4,7 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.brightacademy.R;
-import com.example.brightacademy.dbconnection.DatabaseHandler;
+import com.example.brightacademy.dbconnection.DatabaseHandlerUser;
 import com.example.brightacademy.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -22,7 +22,7 @@ import android.widget.Toast;
 public class
 LoginActivity extends AppCompatActivity {
     TextView email, password,register;
-    DatabaseHandler db;
+    DatabaseHandlerUser db;
 
 
 
@@ -33,7 +33,7 @@ LoginActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        db=new DatabaseHandler(this);
+        db=new DatabaseHandlerUser(this);
 
         email=findViewById(R.id.inputEmail);
         password=findViewById(R.id.inputPassword);
@@ -99,7 +99,7 @@ LoginActivity extends AppCompatActivity {
                     break;
             }
         }else{
-            Toast.makeText(this,"Your login credentials are invalid",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,"Your password or email is incorrect",Toast.LENGTH_SHORT).show();
         }
 
     }

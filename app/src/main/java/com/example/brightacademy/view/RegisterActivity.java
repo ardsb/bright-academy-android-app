@@ -12,9 +12,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.brightacademy.R;
-import com.example.brightacademy.dbconnection.DatabaseHandler;
+import com.example.brightacademy.dbconnection.DatabaseHandlerUser;
 import com.example.brightacademy.model.User;
-import com.example.brightacademy.model.UserRole;
 
 
 public class RegisterActivity extends AppCompatActivity {
@@ -23,7 +22,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     Spinner spinner;
 
-    DatabaseHandler db;
+    DatabaseHandlerUser db;
 //    Button exit;
 
     @Override
@@ -32,17 +31,17 @@ public class RegisterActivity extends AppCompatActivity {
         setContentView(R.layout.activity_register);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        db=new DatabaseHandler(this);
+        db=new DatabaseHandlerUser(this);
 
-        spinner=findViewById(R.id.spinner);
+        spinner=findViewById(R.id.input_Role);
 
-        fullname=findViewById(R.id.input_Fullname);
+        fullname=findViewById(R.id.input_FullName);
         email=findViewById(R.id.input_Email);
         password=findViewById(R.id.input_Password);
 
 
 
-        register=findViewById(R.id.btnRegister);
+        register=findViewById(R.id.btnAdd);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

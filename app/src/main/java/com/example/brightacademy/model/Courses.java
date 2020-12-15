@@ -7,12 +7,35 @@ public class Courses {
     private String duration;
     private String fee;
 
+    public Courses(String coursename, String duration, String fee, String description, String date) {
+
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public Courses(String date) {
+        this.date = date;
+    }
+
+    private String date;
+
+
 
     public Courses(String description, String duration, String fee,String coursename) {
         this.description = description;
         this.duration = duration;
         this.fee = fee;
         this.coursename = coursename;
+    }
+
+    public Courses() {
+
     }
 
 

@@ -14,20 +14,26 @@ import com.example.brightacademy.model.UserRole;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DatabaseHandler extends SQLiteOpenHelper {
-    private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "brightAcademy";
+import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_NAME;
+import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_VERSION;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSES;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_USER;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSECODE;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSE_NAME;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DATE;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DESCRIPTION;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DURATION;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_FEE;
+import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_EMAIL;
+import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_FULL_NAME;
+import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_ID;
+import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_PASSWORD;
+import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_USER_ROLE;
 
-    private static final String TABLE_USER = "user";
-    private static final String KEY_ID = "id";
-    private static final String KEY_FULL_NAME = "fullname";
-    private static final String KEY_EMAIL = "email";
-    private static final String KEY_PASSWORD = "password";
-    private static final String KEY_USER_ROLE = "role";
-
+public class DatabaseHandlerUser extends SQLiteOpenHelper {
     private static final String TAG = "DatabaseHandler";
 
-    public DatabaseHandler(Context context) {
+    public DatabaseHandlerUser(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         //3rd argument to be passed is CursorFactory instance
     }
@@ -35,14 +41,24 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Tables
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_StudentsS_TABLE = "CREATE TABLE " + TABLE_USER + "("
+        String CREATE_Students_TABLE = "CREATE TABLE " + TABLE_USER + "("
                 + KEY_ID + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_FULL_NAME + " TEXT,"
                 + KEY_EMAIL + " TEXT,"
                 + KEY_PASSWORD + " TEXT,"
                 + KEY_USER_ROLE + " TEXT"
                 + ")";
-        db.execSQL(CREATE_StudentsS_TABLE);
+        db.execSQL(CREATE_Students_TABLE);
+
+        String CREATE_Course_TABLE = "CREATE TABLE " + TABLE_COURSES + "("
+                + KEY_COURSECODE + " INTEGER PRIMARY KEY AUTOINCREMENT,"
+                + KEY_COURSE_NAME + " TEXT,"
+                + KEY_DESCRIPTION + " TEXT,"
+                + KEY_DURATION + " TEXT,"
+                + KEY_FEE + " TEXT,"
+                + KEY_DATE + " TEXT"
+                + ")";
+        db.execSQL(CREATE_Course_TABLE);
     }
 
     // Upgrading database
