@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
 import com.example.brightacademy.model.User;
+import com.example.brightacademy.model.UserRole;
 
 
 import java.util.ArrayList;
@@ -62,7 +63,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_FULL_NAME, details.getFullName());
         values.put(KEY_EMAIL, details.getEmail());
         values.put(KEY_PASSWORD, details.getPassword());
-        values.put(KEY_USER_ROLE, details.getUserRole().name());
+        values.put(KEY_USER_ROLE, details.getUserRole().toString());
 
 
         // Inserting Row
@@ -117,4 +118,31 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         return result;
     }
 
+    public User validateUser(String email, String password) {
+        String query = "Select * FROM " + TABLE_USER + " WHERE "
+                + KEY_EMAIL + " =  \"" + email + "\"" + " AND "
+                + KEY_PASSWORD + " =  \"" + password + "\"";
+        Log.d(TAG, "validateUser: SQL QUERY >>>>> " + query);
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        User outsiderUser = new User();
+
+        if (cursor.moveToFirst()){
+            //User is found with validate username and password
+            Log.d(TAG, "validateUser: insideIfUser with username: " + email + " passwrord: " + password + "IS VALID" );
+            outsiderUser.setId(Integer.parseInt(cursor.getString(0)));
+            outsiderUser.setFullName(cursor.getString(1));
+            outsiderUser.setEmail(cursor.getString(2));
+            outsiderUser.setPassword(cursor.getString(3));
+            outsiderUser.setUserRole(UserRole.valueOf(cursor.getString(4)));
+            // Adding Students to list
+            cursor.close();
+        }else{
+            //user is not found
+            outsiderUser = null;
+            Log.d(TAG, "validateUser: user with username: " + email + " passwrord: " + password + "IS NOT VALID" );
+        }
+        db.close();
+        return outsiderUser;
+    }
 }

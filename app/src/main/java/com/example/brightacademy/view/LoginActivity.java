@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.brightacademy.R;
+import com.example.brightacademy.dbconnection.DatabaseHandler;
+import com.example.brightacademy.model.User;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 
@@ -14,13 +16,14 @@ import android.view.View;
 
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class
-MainActivity extends AppCompatActivity {
-    TextView input, input2,register;
-    Button login;
+LoginActivity extends AppCompatActivity {
+    TextView email, password,register;
+    DatabaseHandler db;
+
 
 
     @Override
@@ -30,62 +33,22 @@ MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        db=new DatabaseHandler(this);
+
+        email=findViewById(R.id.inputEmail);
+        password=findViewById(R.id.inputPassword);
+
         register= findViewById(R.id.btnRgster);
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent mainActivityIntent = new Intent(MainActivity.this,  RegisterActivity.class);
+                Intent mainActivityIntent = new Intent(LoginActivity.this,  RegisterActivity.class);
                 startActivity(mainActivityIntent);
 
 
             }
 
         });
-//        input=findViewById(R.id.input_email);
-//        input2=findViewById(R.id.input_password);
-//        register= findViewById(R.id.btnGuest);
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-////                Intent mainActivityIntent = new Intent(MainActivity.this, HomepageActivity.class);
-////                startActivity(mainActivityIntent);
-//
-//
-//            }
-//
-//        });
-//        login=findViewById(R.id.btnLogin);
-//        login.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                String li = input.getText().toString();
-//
-//                if (!TextUtils.isEmpty(li)){
-//                    Toast.makeText(getApplicationContext(), "Email address is " + li,Toast.LENGTH_SHORT).show();
-//
-//
-//
-//                }else {
-//                    //Toast.makeText(getApplicationContext(), "text cant be empty",Toast.LENGTH_SHORT).show();
-//                    input.setError("Email field should be valid");
-//
-//                }
-//
-//                String lu = input2.getText().toString();
-//
-//                if (!TextUtils.isEmpty(li)){
-//                    Toast.makeText(getApplicationContext(), "Email address is " + lu,Toast.LENGTH_SHORT).show();
-//
-//
-//
-//                }else {
-//                    //Toast.makeText(getApplicationContext(), "text cant be empty",Toast.LENGTH_SHORT).show();
-//                    input2.setError("Password field should be valid");
-//
-//                }
-//            }
-//        });
 
 
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -118,5 +81,26 @@ MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onLoginClick(View view) {
+
+        String emailEntererd = this.email.getText().toString();
+        String passwordEntered = this.password.getText().toString();
+        User validateUser = db.validateUser(emailEntererd, passwordEntered);
+        if (validateUser != null) {
+            finish();
+            switch (validateUser.getUserRole()) {
+                case STUDENT:
+                    startActivity(new Intent(this, StudentCourseActivity.class));
+                    break;
+                case ADMIN:
+                    startActivity(new Intent(this, AdminCourseActivity.class));
+                    break;
+            }
+        }else{
+            Toast.makeText(this,"Your login credentials are invalid",Toast.LENGTH_SHORT).show();
+        }
+
     }
 }
