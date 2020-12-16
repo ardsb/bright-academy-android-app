@@ -9,7 +9,7 @@
 
 
     <ListView
-        android:id="@+id/listContact"
+        android:id="@+id/listAdminCourse"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginBottom="10dp"

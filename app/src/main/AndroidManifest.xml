@@ -9,8 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BrightAcademy">
-        <activity android:name=".view.AdminCourseListActivity"></activity>
-        <activity android:name=".view.StudentCourseActivity" />
+        <activity android:name=".view.StudentCourseDetailActivity"></activity>
+        <activity android:name=".view.AdminCourseListActivity" />
+        <activity android:name=".view.StudentDashboardActivity" />
         <activity
             android:name=".view.AddCourseActivity"
             android:label="@string/title_activity_admin"

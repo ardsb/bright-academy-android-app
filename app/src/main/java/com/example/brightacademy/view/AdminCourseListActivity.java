@@ -29,10 +29,10 @@ public class AdminCourseListActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate: ");
         setContentView(R.layout.activity_admin_course_list);
 
-        getSupportActionBar().setTitle("List Activity");
+        getSupportActionBar().setTitle("Course List");
         db = new DatabaseHandlerCourse(AdminCourseListActivity .this);
 
-        list=findViewById(R.id.listContact);
+        list=findViewById(R.id.listAdminCourse);
 
 
     }

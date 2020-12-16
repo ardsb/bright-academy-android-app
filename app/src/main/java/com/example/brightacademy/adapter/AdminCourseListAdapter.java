@@ -34,7 +34,7 @@ public class AdminCourseListAdapter extends ArrayAdapter<Course> {
             super(context, 0 , list);
             mContext = context;
             contactsList = list;
-        this.db = db;
+            this.db = db;
     }
     @NonNull
     @Override

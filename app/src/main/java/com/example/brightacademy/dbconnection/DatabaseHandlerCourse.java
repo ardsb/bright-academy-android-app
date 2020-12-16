@@ -13,7 +13,7 @@ import java.util.List;
 
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_NAME;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_VERSION;
-import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSES;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSECODE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSE_NAME;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DATE;
@@ -38,11 +38,6 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop older table if existed
-        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSES);
-
-        // Create tables again
-        onCreate(db);
     }
 
     // code to add the new contact
@@ -57,16 +52,16 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
         values.put(KEY_DATE, details.getDate());
 
         // Inserting Row
-        db.insert(TABLE_COURSES, null, values);
+        db.insert(TABLE_COURSE, null, values);
         //2nd argument is String containing nullColumnHack
         db.close(); // Closing database connection
     }
 
     // code to get all contacts in a list view
     public List<Course> getallcourse() {
-        List<Course> contactList = new ArrayList<Course>();
+        List<Course> courseList = new ArrayList<Course>();
         // Select All Query
-        String selectQuery = "SELECT  * FROM " + TABLE_COURSES;
+        String selectQuery = "SELECT  * FROM " + TABLE_COURSE;
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
@@ -83,22 +78,22 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
                 Course.setDate(cursor.getString(5));
 
                 // Adding contact to lis
-                contactList.add(Course);
+                courseList.add(Course);
             } while (cursor.moveToNext());
         }
 
         // return contact list
-        return contactList;
+        return courseList;
     }
     public boolean deleteCourse(int id) {
         boolean result = false;
-        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + id + "\"";
+        String query = "Select * FROM " + TABLE_COURSE + " WHERE " + KEY_COURSECODE + " =  \"" + id + "\"";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Course course = new Course();
         if (cursor.moveToFirst()) {
             course.setCoursecode(Integer.parseInt(cursor.getString(0)));
-            db.delete(TABLE_COURSES, KEY_COURSECODE + " = ?",
+            db.delete(TABLE_COURSE, KEY_COURSECODE + " = ?",
                     new String[] { String.valueOf(course.getCoursecode()) });
             cursor.close();
             result = true;
@@ -108,7 +103,7 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
     }
 
     public Course getCourseByCourseCode(int coursecode) {
-        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
+        String query = "Select * FROM " + TABLE_COURSE + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         Course course = new Course();
@@ -139,11 +134,11 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
         values.put(KEY_DATE, course.getDate());
 
 
-        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
+        String query = "Select * FROM " + TABLE_COURSE + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(query, null);
         if (cursor.moveToFirst()) {
-            db.update(TABLE_COURSES, values,KEY_COURSECODE + " = ?",
+            db.update(TABLE_COURSE, values,KEY_COURSECODE + " = ?",
                     new String[] { String.valueOf(coursecode) });
             cursor.close();
             result = true;

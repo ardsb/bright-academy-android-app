@@ -49,16 +49,6 @@ LoginActivity extends AppCompatActivity {
             }
 
         });
-
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -88,10 +78,15 @@ LoginActivity extends AppCompatActivity {
         String emailEntererd = this.email.getText().toString();
         String passwordEntered = this.password.getText().toString();
         User validateUser = db.validateUser(emailEntererd, passwordEntered);
+
         if (validateUser != null) {
+
             switch (validateUser.getUserRole()) {
                 case STUDENT:
-                    startActivity(new Intent(this, AddCourseActivity.class));
+                    Intent intent = new Intent(this, StudentDashboardActivity.class);
+                    intent.putExtra("userId",validateUser.getId());
+                    startActivity(intent);
+
                     break;
                 case ADMIN:
                     startActivity(new Intent(this, AdminCourseListActivity.class));

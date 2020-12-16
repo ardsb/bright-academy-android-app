@@ -16,14 +16,17 @@ import java.util.List;
 
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_NAME;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_VERSION;
-import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSES;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSE;
 import static com.example.brightacademy.dbconnection.fields.Common.TABLE_USER;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_USER_COURSE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSECODE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSE_NAME;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DATE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DESCRIPTION;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DURATION;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_FEE;
+import static com.example.brightacademy.dbconnection.fields.UserCourseFields.KEY_COURSE_CODE;
+import static com.example.brightacademy.dbconnection.fields.UserCourseFields.KEY_USER_ID;
 import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_EMAIL;
 import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_FULL_NAME;
 import static com.example.brightacademy.dbconnection.fields.UserFields.KEY_ID;
@@ -50,7 +53,7 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
                 + ")";
         db.execSQL(CREATE_Students_TABLE);
 
-        String CREATE_Course_TABLE = "CREATE TABLE " + TABLE_COURSES + "("
+        String CREATE_Course_TABLE = "CREATE TABLE " + TABLE_COURSE + "("
                 + KEY_COURSECODE + " INTEGER PRIMARY KEY AUTOINCREMENT,"
                 + KEY_COURSE_NAME + " TEXT,"
                 + KEY_DESCRIPTION + " TEXT,"
@@ -59,13 +62,22 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
                 + KEY_DATE + " TEXT"
                 + ")";
         db.execSQL(CREATE_Course_TABLE);
+
+        String CREATE_UserCourse_TABLE = "CREATE TABLE " + TABLE_USER_COURSE + "("
+                + KEY_USER_ID + " INTEGER,"
+                + KEY_COURSE_CODE + " INTEGER"
+                + ")";
+        db.execSQL(CREATE_UserCourse_TABLE );
     }
+
 
     // Upgrading database
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         // Drop older table if existed
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_COURSE);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_USER_COURSE);
 
         // Create tables again
         onCreate(db);
@@ -160,5 +172,24 @@ public class DatabaseHandlerUser extends SQLiteOpenHelper {
         }
         db.close();
         return outsiderUser;
+    }
+
+    public User getUserById(int userId) {
+        String query = "Select * FROM " + TABLE_USER + " WHERE " + KEY_ID + " =  \"" + userId + "\"";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        User user = new User();
+        if (cursor.moveToFirst()) {
+            user.setId(Integer.parseInt(cursor.getString(0)));
+            user.setId(Integer.parseInt(cursor.getString(0)));
+            user.setFullName(cursor.getString(1));
+            user.setEmail(cursor.getString(2));
+            user.setPassword(cursor.getString(3));
+            user.setUserRole(UserRole.valueOf(cursor.getString(4)));
+            cursor.close();
+
+        }
+        db.close();
+        return user;
     }
 }

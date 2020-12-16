@@ -48,7 +48,7 @@ public class AddCourseActivity extends AppCompatActivity {
       dateEditText =findViewById(R.id.date);
       add=findViewById(R.id.btnAdd);
       update=findViewById(R.id.btnUpdate);
-        courseCodeEditView=findViewById(R.id.input_CoursCode);
+      courseCodeEditView=findViewById(R.id.input_CoursCode);
       courseCodeLayout=findViewById(R.id.input_layout_CourseCode);
 
         Intent intent = getIntent();

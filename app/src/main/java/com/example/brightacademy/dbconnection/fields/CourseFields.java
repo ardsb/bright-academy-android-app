@@ -7,5 +7,5 @@ public class CourseFields {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_DURATION = "duration";
     public static final String KEY_FEE = "fee";
-    public static final String KEY_DATE = "Date";
+    public static final String KEY_DATE = "date";
 }
