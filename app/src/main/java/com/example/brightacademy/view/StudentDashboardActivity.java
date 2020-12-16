@@ -54,6 +54,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 Course selectedCourse = allCourse.get(position);
                 Intent addCourseIntent = new Intent(view.getContext(),  StudentCourseDetailActivity.class);
                 addCourseIntent.putExtra("coursecode",selectedCourse.getCoursecode());
+                addCourseIntent.putExtra("userId",user.getId());
                 startActivity(addCourseIntent);
 
 

@@ -14,12 +14,15 @@ import java.util.List;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_NAME;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_VERSION;
 import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSE;
+import static com.example.brightacademy.dbconnection.fields.Common.TABLE_USER_COURSE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSECODE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSE_NAME;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DATE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DESCRIPTION;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DURATION;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_FEE;
+import static com.example.brightacademy.dbconnection.fields.UserCourseFields.KEY_COURSE_CODE;
+import static com.example.brightacademy.dbconnection.fields.UserCourseFields.KEY_USER_ID;
 
 public class DatabaseHandlerCourse extends SQLiteOpenHelper {
 
@@ -146,5 +149,35 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
         db.close();
         return result;
 
+    }
+
+    public boolean enrollCourseForUser(int coursecode, int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_COURSE_CODE,coursecode);
+        values.put(KEY_USER_ID,userId);
+        db.insert(TABLE_USER_COURSE, null, values);
+        return true;
+    }
+
+    public boolean unEnrollCourseForUser(int coursecode, int userId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        db.delete(TABLE_USER_COURSE, KEY_COURSE_CODE + " = ? AND " + KEY_USER_ID + " = ?",
+                new String[] { String.valueOf(coursecode),String.valueOf(userId) });
+        return true;
+    }
+
+    public boolean checkCourseEnrollmentForUser(int coursecode, int userId) {
+        boolean found = false;
+        String query = "Select * FROM " + TABLE_USER_COURSE + " WHERE " + KEY_COURSE_CODE + " =  \"" + coursecode + "\" AND " +KEY_USER_ID+" =  \"" + userId + "\"";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            found = true;
+            cursor.close();
+        }
+        db.close();
+
+        return found;
     }
 }

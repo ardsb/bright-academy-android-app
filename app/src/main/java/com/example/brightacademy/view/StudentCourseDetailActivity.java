@@ -20,6 +20,7 @@ import java.util.List;
 public class StudentCourseDetailActivity extends AppCompatActivity {
 
     DatabaseHandlerCourse db;
+    Button btnEnroll,btnUnEnroll;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -33,11 +34,12 @@ public class StudentCourseDetailActivity extends AppCompatActivity {
         TextView feeText  = findViewById(R.id.txtfee);
         TextView dateText = findViewById(R.id.txtdate);
         TextView descriptionText = findViewById(R.id.txtdescription);
-
-
+        btnEnroll = findViewById(R.id.btnEnroll);
+        btnUnEnroll = findViewById(R.id.btnUnEnroll);
 
         Intent intent = getIntent();
         int coursecode  = intent.getIntExtra("coursecode",-1);
+        int userId  = intent.getIntExtra("userId",-1);
 
 
         if(coursecode!=-1) {
@@ -50,7 +52,35 @@ public class StudentCourseDetailActivity extends AppCompatActivity {
             feeText.setText(course.getFee());
             dateText.setText(course.getDescription());
             descriptionText.setText(course.getDate());
+            btnEnroll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                   if (db.enrollCourseForUser(course.getCoursecode(),userId)){
+                       Toast.makeText(v.getContext(), String.format("Successfully enrolled for the course %s", course.getCoursename()),Toast.LENGTH_SHORT).show();
+                       btnEnroll.setVisibility(View.GONE);
+                       btnUnEnroll.setVisibility(View.VISIBLE);
+                   }
+                }
+            });
 
+            btnUnEnroll.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (db.unEnrollCourseForUser(course.getCoursecode(),userId)){
+                        Toast.makeText(v.getContext(), String.format("Successfully left the course %s", course.getCoursename()),Toast.LENGTH_SHORT).show();
+                        btnEnroll.setVisibility(View.VISIBLE);
+                        btnUnEnroll.setVisibility(View.GONE);
+                    }
+                }
+            });
+
+            if (db.checkCourseEnrollmentForUser(course.getCoursecode(),userId)) {
+                btnEnroll.setVisibility(View.GONE);
+                btnUnEnroll.setVisibility(View.VISIBLE);
+            }else{
+                btnEnroll.setVisibility(View.VISIBLE);
+                btnUnEnroll.setVisibility(View.GONE);
+            }
         }
 
 

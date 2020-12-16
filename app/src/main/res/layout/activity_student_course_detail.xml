@@ -168,6 +168,13 @@
                     android:layout_marginTop="10dp"
                     android:backgroundTint="@color/green"
                     android:text="Enroll to this course" />
+                <Button
+                    android:id="@+id/btnUnEnroll"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:backgroundTint="@color/design_default_color_error"
+                    android:text="leave this course" />
             </LinearLayout>
 
 
