@@ -15,4 +15,5 @@
         <item>Admin</item>
     </string-array>
     <string name="title_activity_admin">AdminActivity</string>
+    <string name="title_activity_admin_course_list">AdminCourseListActivity</string>
 </resources>

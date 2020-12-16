@@ -6,7 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.brightacademy.model.Courses;
+import com.example.brightacademy.model.Course;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +14,7 @@ import java.util.List;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_NAME;
 import static com.example.brightacademy.dbconnection.fields.Common.DATABASE_VERSION;
 import static com.example.brightacademy.dbconnection.fields.Common.TABLE_COURSES;
+import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSECODE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_COURSE_NAME;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DATE;
 import static com.example.brightacademy.dbconnection.fields.CourseFields.KEY_DESCRIPTION;
@@ -45,14 +46,14 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
     }
 
     // code to add the new contact
-    public void addCourses(Courses details) {
+    public void addCourses(Course details) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         values.put(KEY_COURSE_NAME, details.getCoursename());
-        values.put(KEY_DESCRIPTION, details.getDescription());
         values.put(KEY_DURATION , details.getDuration());
         values.put(KEY_FEE, details.getFee());
+        values.put(KEY_DESCRIPTION, details.getDescription());
         values.put(KEY_DATE, details.getDate());
 
         // Inserting Row
@@ -62,47 +63,93 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
     }
 
     // code to get all contacts in a list view
-    public List<Courses> addingCourses() {
-        List<Courses> contactList = new ArrayList<Courses>();
+    public List<Course> getallcourse() {
+        List<Course> contactList = new ArrayList<Course>();
         // Select All Query
         String selectQuery = "SELECT  * FROM " + TABLE_COURSES;
 
-        SQLiteDatabase db = this.getWritableDatabase();
+        SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         // looping through all rows and adding to list
         if (cursor.moveToFirst()) {
             do {
-                Courses Courses = new Courses();
-                Courses.setCoursecode(Integer.parseInt(cursor.getString(0)));
-                Courses.setCoursename(cursor.getString(1));
-                Courses.setDuration(cursor.getString(2));
-                Courses.setFee(cursor.getString(3));
-                Courses.setDescription(cursor.getString(4));
-                Courses.setDate(cursor.getString(4));
-                // Adding contact to list
-                contactList.add(Courses);
+                Course Course = new Course();
+                Course.setCoursecode(Integer.parseInt(cursor.getString(0)));
+                Course.setCoursename(cursor.getString(1));
+                Course.setDescription(cursor.getString(2));
+                Course.setDuration(cursor.getString(3));
+                Course.setFee(cursor.getString(4));
+                Course.setDate(cursor.getString(5));
+
+                // Adding contact to lis
+                contactList.add(Course);
             } while (cursor.moveToNext());
         }
 
         // return contact list
         return contactList;
     }
-//    public boolean deleteContact(int id) {
-//        boolean result = false;
-//        String query = "Select * FROM " + TABLE_CONTACTS + " WHERE " + KEY_ID + " =  \"" + id + "\"";
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        Cursor cursor = db.rawQuery(query, null);
-//        Contact contact = new Contact();
-//        if (cursor.moveToFirst()) {
-//            contact.setId(Integer.parseInt(cursor.getString(0)));
-//            db.delete(TABLE_CONTACTS, KEY_ID + " = ?",
-//                    new String[] { String.valueOf(contact.getId()) });
-//            cursor.close();
-//            result = true;
-//        }
-//        db.close();
-//        return result;
-//    }
+    public boolean deleteCourse(int id) {
+        boolean result = false;
+        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + id + "\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Course course = new Course();
+        if (cursor.moveToFirst()) {
+            course.setCoursecode(Integer.parseInt(cursor.getString(0)));
+            db.delete(TABLE_COURSES, KEY_COURSECODE + " = ?",
+                    new String[] { String.valueOf(course.getCoursecode()) });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+    }
 
+    public Course getCourseByCourseCode(int coursecode) {
+        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        Course course = new Course();
+        if (cursor.moveToFirst()) {
+            course.setCoursecode(Integer.parseInt(cursor.getString(0)));
+            course.setCoursename(cursor.getString(1));
+            course.setDescription(cursor.getString(2));
+            course.setDuration(cursor.getString(3));
+            course.setFee(cursor.getString(4));
+            course.setDate(cursor.getString(5));
+            cursor.close();
+        }
+        db.close();
+
+        return course;
+
+
+    }
+
+    public boolean updateCourseForCourseCode(int coursecode, Course course) {
+        boolean result = false;
+
+        ContentValues values = new ContentValues();
+        values.put(KEY_COURSE_NAME, course.getCoursename());
+        values.put(KEY_DURATION , course.getDuration());
+        values.put(KEY_FEE, course.getFee());
+        values.put(KEY_DESCRIPTION, course.getDescription());
+        values.put(KEY_DATE, course.getDate());
+
+
+        String query = "Select * FROM " + TABLE_COURSES + " WHERE " + KEY_COURSECODE + " =  \"" + coursecode + "\"";
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        if (cursor.moveToFirst()) {
+            db.update(TABLE_COURSES, values,KEY_COURSECODE + " = ?",
+                    new String[] { String.valueOf(coursecode) });
+            cursor.close();
+            result = true;
+        }
+        db.close();
+        return result;
+
+    }
 }

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".view.AdminCourseActivity">
+    tools:context=".view.AddCourseActivity">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -26,19 +26,61 @@
                 android:layout_marginBottom="30dp"
                 >
 
-                <ImageView
-                    android:id="@+id/imageView2"
-                    android:layout_width="140dp"
-                    android:layout_height="140dp"
-                    app:srcCompat="@drawable/brightlogo" />
-
+                <TextView
+                    android:id="@+id/textView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-black"
+                    android:text="Course works"
+                    android:textSize="36sp" />
             </LinearLayout>
+
+
+<!--        <LinearLayout-->
+<!--            android:id="@+id/courseCodeLayout"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="10dp"-->
+<!--            android:layout_marginLeft="39dp">-->
+<!--            <TextView-->
+<!--                android:id="@+id/txt1"-->
+<!--                android:textSize="16sp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="Course Code"-->
+<!--                />-->
+<!--            <TextView-->
+<!--                android:id="@+id/textCoursecode"-->
+<!--                android:layout_marginLeft="130dp"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="16sp"-->
+<!--                android:text="TextView" />-->
+
+<!--        </LinearLayout>-->
             <LinearLayout
-                android:layout_width="250dp"
+                android:layout_width="320dp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:layout_marginBottom="30dp"
                 >
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/input_layout_CourseCode"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <EditText
+                        android:id="@+id/input_CoursCode"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:colorBackground"
+                        android:inputType="none"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:hint="Course Code" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/input_layout_Fullname"
@@ -65,7 +107,7 @@
                         android:inputType="number"
                         android:layout_marginTop="20dp"
                         android:background="?android:colorBackground"
-                        android:hint="Duration" />
+                        android:hint="Duration in months" />
 
                 </com.google.android.material.textfield.TextInputLayout>
                 <com.google.android.material.textfield.TextInputLayout
@@ -92,6 +134,7 @@
                         android:id="@+id/input_Description"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:inputType="textMultiLine"
                         android:layout_marginTop="20dp"
                         android:background="?android:colorBackground"
                         android:hint="Description" />
@@ -113,13 +156,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="20dp"
-                        android:inputType="datetime"
                         android:textSize="16sp"
+                        android:inputType="textMultiLine"
                         android:background="?android:colorBackground"
                         android:hint="Date" />
                 </com.google.android.material.textfield.TextInputLayout>
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginTop="30dp"
@@ -131,11 +174,18 @@
 
                     <Button
                         android:id="@+id/btnAdd"
-                        android:layout_width="250dp"
+                        android:layout_width="match_parent"
                         android:layout_height="50dp"
                         android:layout_gravity="center"
                         android:background="?attr/colorSecondary"
                         android:text="ADD " />
+                    <Button
+                        android:id="@+id/btnUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="50dp"
+                        android:layout_gravity="center"
+                        android:background="?attr/colorSecondary"
+                        android:text="Update " />
 
                 </LinearLayout>
 

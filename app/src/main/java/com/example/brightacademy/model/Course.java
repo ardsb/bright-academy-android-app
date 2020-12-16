@@ -1,14 +1,24 @@
 package com.example.brightacademy.model;
 
-public class Courses {
+public class Course {
     private int coursecode;
     private String coursename;
     private String description;
     private String duration;
     private String fee;
+    private String date;
 
-    public Courses(String coursename, String duration, String fee, String description, String date) {
+    public Course(String coursename, String duration, String fee, String description, String date) {
 
+        this.description = description;
+        this.duration = duration;
+        this.fee = fee;
+        this.coursename = coursename;
+        this.date = date;
+
+    }
+
+    public Course() {
     }
 
     public String getDate() {
@@ -17,25 +27,6 @@ public class Courses {
 
     public void setDate(String date) {
         this.date = date;
-    }
-
-    public Courses(String date) {
-        this.date = date;
-    }
-
-    private String date;
-
-
-
-    public Courses(String description, String duration, String fee,String coursename) {
-        this.description = description;
-        this.duration = duration;
-        this.fee = fee;
-        this.coursename = coursename;
-    }
-
-    public Courses() {
-
     }
 
 

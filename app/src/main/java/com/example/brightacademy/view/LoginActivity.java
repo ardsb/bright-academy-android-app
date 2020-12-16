@@ -29,7 +29,7 @@ LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_login);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -89,18 +89,19 @@ LoginActivity extends AppCompatActivity {
         String passwordEntered = this.password.getText().toString();
         User validateUser = db.validateUser(emailEntererd, passwordEntered);
         if (validateUser != null) {
-            finish();
             switch (validateUser.getUserRole()) {
                 case STUDENT:
-                    startActivity(new Intent(this, StudentCourseActivity.class));
+                    startActivity(new Intent(this, AddCourseActivity.class));
                     break;
                 case ADMIN:
-                    startActivity(new Intent(this, AdminCourseActivity.class));
+                    startActivity(new Intent(this, AdminCourseListActivity.class));
                     break;
             }
         }else{
             Toast.makeText(this,"Your password or email is incorrect",Toast.LENGTH_SHORT).show();
         }
+
+
 
     }
 }
