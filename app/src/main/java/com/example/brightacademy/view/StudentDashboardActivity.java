@@ -1,6 +1,8 @@
 package com.example.brightacademy.view;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,17 +13,17 @@ import android.widget.TextView;
 
 import com.example.brightacademy.R;
 import com.example.brightacademy.adapter.StudentCourseListAdapter;
+import com.example.brightacademy.adapter.ViewPagerAdapter;
 import com.example.brightacademy.dbconnection.DatabaseHandlerCourse;
 import com.example.brightacademy.dbconnection.DatabaseHandlerUser;
 import com.example.brightacademy.model.Course;
 import com.example.brightacademy.model.User;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.List;
 
 public class StudentDashboardActivity extends AppCompatActivity {
-    DatabaseHandlerCourse db ;
     DatabaseHandlerUser dbUser;
-    ListView list;
     TextView name,email;
 
     @Override
@@ -29,12 +31,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_student_dashboard);
 
-        db = new DatabaseHandlerCourse( this);
         dbUser = new DatabaseHandlerUser(this);
-
-        list=findViewById(R.id.listStudentCourse);
-        List<Course> allCourse=db.getallcourse();
-
         name=findViewById(R.id.txtName);
         email=findViewById(R.id.txtEmail1);
 
@@ -44,23 +41,15 @@ public class StudentDashboardActivity extends AppCompatActivity {
         name.setText(user.getFullName());
         email.setText(user.getEmail());
 
+        TabLayout tabLayout = findViewById(R.id.tab_layout);
+        ViewPager viewPager = findViewById(R.id.pager);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(
+                getSupportFragmentManager(),
+                FragmentStatePagerAdapter.BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT,
+                userId
+        );
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
 
-
-        StudentCourseListAdapter adapter=new StudentCourseListAdapter(this, allCourse,db);
-        list.setAdapter(adapter);
-        list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Course selectedCourse = allCourse.get(position);
-                Intent addCourseIntent = new Intent(view.getContext(),  StudentCourseDetailActivity.class);
-                addCourseIntent.putExtra("coursecode",selectedCourse.getCoursecode());
-                addCourseIntent.putExtra("userId",user.getId());
-                startActivity(addCourseIntent);
-
-
-
-
-            }
-        });
     }
 }

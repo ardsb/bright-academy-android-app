@@ -32,12 +32,10 @@ public class AddCourseActivity extends AppCompatActivity {
     
     DatabaseHandlerCourse db;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
-
 
         db=new DatabaseHandlerCourse(this);
 
@@ -101,10 +99,6 @@ public class AddCourseActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,10 +109,7 @@ public class AddCourseActivity extends AppCompatActivity {
                 String description = descriptionEditText.getText().toString().trim();
                 String date= dateEditText.getText().toString().trim();
 
-
-
                 if(!TextUtils.isEmpty(courseName) && !TextUtils.isEmpty(duration) && !TextUtils.isEmpty(fee) && !TextUtils.isEmpty(description) && !TextUtils.isEmpty(date) ){
-
 
                     db.addCourses(new Course(courseName,duration,fee,description,date));
 

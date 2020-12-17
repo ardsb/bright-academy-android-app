@@ -180,4 +180,33 @@ public class DatabaseHandlerCourse extends SQLiteOpenHelper {
 
         return found;
     }
+
+    public List<Course> getCourseEnrolledByUser(int userId) {
+        List<Course> userEnrolledCourseList = new ArrayList<Course>();
+        // Select All Query
+        String selectQuery = "SELECT  * FROM " + TABLE_COURSE + " WHERE " + KEY_COURSE_CODE + " IN " +
+                " ( SELECT " + KEY_COURSE_CODE + " FROM " + TABLE_USER_COURSE + " WHERE " +KEY_USER_ID+ " = \"" + userId + "\")";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.rawQuery(selectQuery, null);
+
+        // looping through all rows and adding to list
+        if (cursor.moveToFirst()) {
+            do {
+                Course Course = new Course();
+                Course.setCoursecode(Integer.parseInt(cursor.getString(0)));
+                Course.setCoursename(cursor.getString(1));
+                Course.setDescription(cursor.getString(2));
+                Course.setDuration(cursor.getString(3));
+                Course.setFee(cursor.getString(4));
+                Course.setDate(cursor.getString(5));
+
+                // Adding contact to lis
+                userEnrolledCourseList.add(Course);
+            } while (cursor.moveToNext());
+        }
+
+        // return contact list
+        return userEnrolledCourseList;
+    }
 }

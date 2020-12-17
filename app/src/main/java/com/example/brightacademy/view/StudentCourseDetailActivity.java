@@ -6,10 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.example.brightacademy.R;
 import com.example.brightacademy.dbconnection.DatabaseHandlerCourse;
 import com.example.brightacademy.model.Course;
@@ -40,7 +38,6 @@ public class StudentCourseDetailActivity extends AppCompatActivity {
         Intent intent = getIntent();
         int coursecode  = intent.getIntExtra("coursecode",-1);
         int userId  = intent.getIntExtra("userId",-1);
-
 
         if(coursecode!=-1) {
             //course code is not -1 this is called when edit button is clicked from the admincourselistadapter

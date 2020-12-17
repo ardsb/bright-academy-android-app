@@ -13,7 +13,6 @@ public class User {
     private UserRole userRole;
 
 
-
     public User( String fullName, String email,
                 String password, String userRole) {
         this.fullName = fullName;
@@ -25,7 +24,6 @@ public class User {
         }
         this.userRole = defaultUserRole;
     }
-
 
     public String getFullName() {
         return fullName;
@@ -50,17 +48,6 @@ public class User {
     public void setPassword(String password) {
         this.password = password;
     }
-
-//    private int img;
-//
-//    public int getImg() {
-//        return img;
-//    }
-//
-//    public void setImg(int img) {
-//        this.img = img;
-//    }
-
 
     public int getId() {
         return id;

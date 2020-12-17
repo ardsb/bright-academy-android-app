@@ -19,11 +19,9 @@ import com.example.brightacademy.model.User;
 public class RegisterActivity extends AppCompatActivity {
     EditText fullname,email,password;
     Button register;
-
     Spinner spinner;
-
     DatabaseHandlerUser db;
-//    Button exit;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +36,6 @@ public class RegisterActivity extends AppCompatActivity {
         fullname=findViewById(R.id.input_FullName);
         email=findViewById(R.id.input_Email);
         password=findViewById(R.id.input_Password);
-
 
 
         register=findViewById(R.id.btnAdd);
@@ -66,14 +63,8 @@ public class RegisterActivity extends AppCompatActivity {
                    Toast.makeText(RegisterActivity.this, "Enter valid input",Toast.LENGTH_SHORT ).show();
                 }
 
-
-
-
-
-
             }
         });
-
 
     }
 
